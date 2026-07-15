@@ -16,10 +16,10 @@ type Property = {
 };
 
 const destinations = [
-  { city: "الرياض", image: "https://images.pexels.com/photos/14846410/pexels-photo-14846410.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1440&fit=crop" },
-  { city: "جدة", image: "https://images.pexels.com/photos/28241644/pexels-photo-28241644.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1440&fit=crop" },
-  { city: "الطائف", image: "https://images.pexels.com/photos/8143683/pexels-photo-8143683.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1440&fit=crop" },
-  { city: "مكة", image: "https://images.pexels.com/photos/18350573/pexels-photo-18350573.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1440&fit=crop" },
+  { city: "الرياض", image: "/riadh.jpg" },
+  { city: "جدة", image: "/jeddah.jpg" },
+  { city: "الطائف", image: "/taif.jpg" },
+  { city: "مكة", image: "/meccah.jpg" },
 ];
 
 const properties: Property[] = [
@@ -109,7 +109,7 @@ export default function Home() {
           <div className="container">
             <div className="sectionHead"><div><span className="kicker">استكشف وجهتك</span><h2>الوجهات الأكثر طلباً</h2></div><p>من قلب المدن النابضة إلى هدوء المرتفعات، اختر وجهتك واترك الباقي علينا.</p></div>
             <div className="destinations">
-              {destinations.map((item) => { const count = properties.filter((property) => property.city === item.city).length; return <button className="destination" key={item.city} onClick={() => chooseFilter(item.city)}><img src={item.image} alt={item.city} loading="lazy" decoding="async" referrerPolicy="no-referrer" /><span><strong>{item.city}</strong><small>{propertyCountLabel(count)}</small></span></button>; })}
+              {destinations.map((item) => { const count = properties.filter((property) => property.city === item.city).length; return <button className="destination" key={item.city} onClick={() => chooseFilter(item.city)} style={{background:`url(${item.image}) 75%/cover no-repeat`}}><span><strong>{item.city}</strong><small>{propertyCountLabel(count)}</small></span></button>; })}
             </div>
           </div>
         </section>
