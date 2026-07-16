@@ -109,7 +109,7 @@ export default function Home() {
           <div className="container">
             <div className="sectionHead"><div><span className="kicker">استكشف وجهتك</span><h2>الوجهات الأكثر طلباً</h2></div><p>من قلب المدن النابضة إلى هدوء المرتفعات، اختر وجهتك واترك الباقي علينا.</p></div>
             <div className="destinations">
-              {destinations.map((item) => { const count = properties.filter((property) => property.city === item.city).length; return <button className="destination" key={item.city} onClick={() => chooseFilter(item.city)} style={{background:`url(${item.image}) 75%/cover no-repeat`}}><span><strong>{item.city}</strong><small>{propertyCountLabel(count)}</small></span></button>; })}
+              {destinations.map((item) => { const count = properties.filter((property) => property.city === item.city).length; return <button className="destination" key={item.city} onClick={() => chooseFilter(item.city)}><img src={item.image} alt={item.city} loading="lazy" decoding="async" referrerPolicy="no-referrer" /><span><strong>{item.city}</strong><small>{propertyCountLabel(count)}</small></span></button>; })}
             </div>
           </div>
         </section>
