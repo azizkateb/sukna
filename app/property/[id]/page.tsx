@@ -20,17 +20,134 @@ export function generateStaticParams() {
   return properties.map((property) => ({ id: String(property.id) }));
 }
 
+const siteUrl = "https://www.sukna.shop";
+
+const absoluteUrl = (path: string) =>
+  path.startsWith("http") ? path : `${siteUrl}${path}`;
+
+const seoDescription = (property: PropertyDetails) => {
+  const location = property.area
+    ? `${property.area} في ${property.city}`
+    : property.city;
+  return `${property.title} في ${location}. ${property.description}`.slice(0, 160);
+};
+
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
   const property = properties.find((item) => item.id === Number(id));
-  return property
-    ? { title: `${property.title} — سُكنى`, description: property.description }
-    : { title: "العقار غير موجود — سُكنى" };
+
+  if (!property) {
+    return {
+      title: "العقار غير موجود",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const url = `${siteUrl}/property/${property.id}`;
+  const description = seoDescription(property);
+  const socialImage = absoluteUrl(property.gallery[0]);
+
+  return {
+    title: property.title,
+    description,
+    keywords: [
+      property.title,
+      `${property.title} ${property.city}`,
+      `إيجار يومي ${property.city}`,
+      `إقامات ${property.city}`,
+      property.area,
+      ...property.amenities.slice(0, 4),
+    ].filter(Boolean),
+    alternates: { canonical: url },
+    openGraph: {
+      type: "website",
+      locale: "ar_SA",
+      url,
+      siteName: "سُكنى",
+      title: property.title,
+      description,
+      images: [
+        {
+          url: socialImage,
+          alt: `${property.title} في ${property.city}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: property.title,
+      description,
+      images: [socialImage],
+    },
+    robots: { index: true, follow: true },
+  };
 }
 
 export default async function PropertyPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const property = properties.find((item) => item.id === Number(id));
   if (!property) notFound();
-  return <PropertyDetailsClient property={property} />;
+
+  const propertyUrl = `${siteUrl}/property/${property.id}`;
+  const locationName = property.area
+    ? `${property.area}، ${property.city}`
+    : property.city;
+  const propertyJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LodgingBusiness",
+        "@id": `${propertyUrl}#lodging`,
+        name: property.title,
+        description: property.description,
+        url: propertyUrl,
+        image: property.gallery.map(absoluteUrl),
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: locationName,
+          addressRegion: property.city,
+          addressCountry: "SA",
+        },
+        amenityFeature: property.amenities.map((amenity) => ({
+          "@type": "LocationFeatureSpecification",
+          name: amenity,
+          value: true,
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${propertyUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "الرئيسية",
+            item: siteUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: property.city,
+            item: `${siteUrl}/#listings`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: property.title,
+            item: propertyUrl,
+          },
+        ],
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(propertyJsonLd) }}
+      />
+      <PropertyDetailsClient property={property} />
+    </>
+  );
 }
