@@ -129,7 +129,7 @@ export default function Home() {
 
         <section className="section why" id="why"><div className="container"><div className="sectionHead"><div><span className="kicker">راحة تبدأ قبل وصولك</span><h2>لماذا سُكنى؟</h2></div><p>تجربة حجز واضحة وموثوقة، من البحث الأول وحتى لحظة تسجيل الدخول.</p></div><div className="benefits"><article><i>◷</i><h3>حجز سريع</h3><p>اختر وحدتك وأرسل طلبك خلال دقائق عبر واتساب.</p></article><article><i>⌂</i><h3>عقارات مختارة بعناية</h3><p>نراجع الصور والمرافق والمعلومات قبل عرض أي عقار.</p></article><article><i>♧</i><h3>دعم متواصل</h3><p>فريقنا معك للإجابة عن استفساراتك ومساعدتك.</p></article></div></div></section>
 
-        <section className="container cta"><div><h2>وجدت الإقامة المناسبة؟</h2><p>تواصل معنا الآن وسنساعدك على إتمام الحجز بكل سهولة.</p></div><a className="contactButton" href="https://wa.me/966500000000" target="_blank" rel="noreferrer">
+        <section className="container cta"><div><h2>وجدت الإقامة المناسبة؟</h2><p>تواصل معنا الآن وسنساعدك على إتمام الحجز بكل سهولة.</p></div><a className="contactButton" href="https://wa.me/966566836016" target="_blank" rel="noreferrer">
           <span>تواصل عبر واتساب</span>
           <span className="iconButton" aria-hidden="true">
             <svg className="socialSvg whatsappSvg" viewBox="0 0 16 16">
@@ -144,7 +144,7 @@ export default function Home() {
         className="Btn"
         type="button"
         aria-label="تواصل عبر واتساب"
-        onClick={() => window.open("https://wa.me/966500000000", "_blank", "noopener,noreferrer")}
+        onClick={() => window.open("https://wa.me/966566836016", "_blank", "noopener,noreferrer")}
       >
         <span className="sign" aria-hidden="true">
           <svg className="socialSvg whatsappSvg" viewBox="0 0 16 16">

@@ -20,7 +20,7 @@ export default function PropertyDetailsClient({ property }: { property: Property
   const [activeImage, setActiveImage] = useState(property.gallery[0]);
   const whatsappUrl =
     "https://" +
-    "wa.me/966500000000?text=" +
+    "wa.me/966566836016?text=" +
     encodeURIComponent(`مرحباً، أريد الاستفسار عن ${property.title}`);
   const pageStyle = { "--detail-bg": `url("${activeImage}")` } as CSSProperties;
 
